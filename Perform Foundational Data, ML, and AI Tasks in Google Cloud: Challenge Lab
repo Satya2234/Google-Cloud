@@ -1,0 +1,105 @@
+Lab Lnk-https: //www.cloudskillsboost.google/focuses/11044?parent=catalog
+
+Task 1: 
+ 
+Create a cloud storage bucket with ‘daynamic_value’ as given in instructions
+gsutil cp gs://cloud-training/gsp323/lab.csv .
+ 
+cat lab.csv
+ 
+gsutil cp gs://cloud-training/gsp323/lab.schema .
+ 
+cat lab.schema
+ 
+Create a bigquery dataset with ‘daynamic_value’ as given in instructions
+Create a bigquery Table in the recently created dataset ’‘daynamic_value’’ as per the given instructions.
+1. Give the name to table.
+2. Create a table from - Google cloud storage
+3.Select file from GCS bucket-  gs://cloud-training/gsp323/lab.csv
+4. File format - CSV
+5. Schema - click on checkbox of the Edit as text and enter the content that you get in cloud shell after run this command “cat lab.schema” just copy the content between this “[ ]”
+ 
+In dataflow create a job from template like this
+Give Name
+In Dataflow batch template >> select “Text Files on Cloud Storage to BigQuery” From "Process Data in Bulk (batch)"
+ 
+ 
+Task 2:
+ 
+Create a cluster with given Region
+ 
+Open cluster | vm instances | ssh to master, run the command
+ 
+hdfs dfs -cp gs://cloud-training/gsp323/data.txt /data.txt
+ 
+ 
+Go to the job then click on create a job
+Create table with given specific values which mention in  lab
+Create a job
+
+ 
+ 
+Task 3:
+Go to the Dataprep by the nevigation menu
+In dataprep:
+Import gs://cloud-training/gsp323/runs.csv
+You may need to include the bucket path as the GCS prefix/path to locate the file in Dataprep
+ 
+Remove rows all rows with the state of "FAILURE
+Create a new flow and recipe with the following steps
+In recipe, select Filter exact
+Choose the following:
+
+Click Add
+ 
+Remove all rows with 0 or 0.0 as a score (Use the regex pattern /(^0$|^0\.0$)/)
+Add another step and select Filter exact
+Choose the following:
+
+Click Add.
+ 
+Label columns with the names above
+Add another step and select Rename columns
+Rename the columns as such:
+col2:'runid'
+col3:'userid'
+col4:'labid'
+col5:'lab_title'
+col6:'start'
+col7:'end'
+col8:'time'
+col9:'score'
+col10:'state'
+ 
+Click the +add button within the manual rename step to add additional columns.
+
+Run the job, take the defaults
+ 
+Task 4:
+ 
+ 
+Cloud Natural Language:
+ 
+In cloud shell
+ 
+ 
+export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value core/project)
+ 
+gcloud iam service-accounts create my-natlang-sa \
+--display-name "my natural language service account"
+ 
+gcloud iam service-accounts keys create ~/key.json \
+--iam-account my-natlang-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
+ 
+export GOOGLE_APPLICATION_CREDENTIALS="/home/USER/key.json"
+ 
+ 
+gcloud ml language analyze-entities --content="Old Norse texts portray Odin as one-eyed and long-bearded, frequently wielding a spear named Gungnir and wearing a cloak and a broad hat." > result.json
+ 
+ 
+gsutil cp result.json <Copy the url for the Cloud Natural Language API given in the lab>
+Type a message here...
+
+
+
+#Happy Coding
